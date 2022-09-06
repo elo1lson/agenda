@@ -14,7 +14,11 @@ const routes = require('./routes');
 const path = require('path');
 const helmet = require('helmet');
 const csrf = require('csurf');
-const { middlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
+
+const {
+  middlewareGlobal,
+  checkCsrfError,
+  csrfMiddleware } = require('./src/middlewares/middleware');
 
 app.use(helmet());
 
