@@ -1,2 +1,4 @@
 node_modules
+public/assets/js/bundle.js.map
+public/assets/js/bundle.js
 .env
