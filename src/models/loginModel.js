@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-
+const bcrypt = require('bcryptjs')
 const LoginSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  password: {type:String, require: true}
+  password: { type: String, require: true }
 });
 
 const LoginModel = mongoose.model('Login', LoginSchema);
@@ -14,23 +14,43 @@ class Login {
     this.errors = []
     this.user = null
   }
-
-  async register() {
-    this.valida()
-    if (this.errors.length > 0) return
-    try {
-      this.user = await LoginModel.create(this.body)
-
-    } catch (error) {
-      console.log(error);
-
+  async login() {
+    if (!validator.isEmail(this.body.email)) this.errors.push('E-mail inválido');
+    this.user = await this.userExist()
+    if (!this.user) {
+      this.errors.push("Usuário inválido!")
+      this.user= null
+      return
     }
+    if (!bcrypt.compareSync(this.body.password, this.user.password)) {
+      this.errors.push('Senha inválida!')
+      return
+    }
+
+  }
+  async register() {
+    this.valid()
+    if (this.errors.length > 0) return
+
+    let user = await this.userExist()
+    if (user) this.errors.push("Este usuario já existe!")
+    if (this.errors.length > 0) return
+
+
+    const salt = bcrypt.genSaltSync()
+
+    this.body.password = bcrypt.hashSync(this.body.password, salt)
+    this.user = await LoginModel.create(this.body)
+
+  }
+  async userExist() {
+    return LoginModel.findOne({ email: this.body.email })
   }
 
-  valida() {
+  valid() {
 
     this.cleanUp()
-    if (this.body.password.length < 3 || this.body.password > 50) this.errors.push('A senha precisa ter entre 3 e 50 caracteres')
+    if (this.body.password.length < 5 || this.body.password.length > 20) this.errors.push('A senha precisa ter entre 5 e 20 caracteres')
     if (!validator.isEmail(this.body.email)) this.errors.push('E-mail inválido');
 
   }
