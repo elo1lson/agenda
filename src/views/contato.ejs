@@ -9,6 +9,33 @@
           <h1 class="display-3 text-center my-3">Contatos</h1>
           <p class="text-center lead">Crie ou edite seus contatos aqui</p>
           <%- include('includes/messages')  %> 
+          <% if(contato._id) {%> 
+            <form action="/contatos/<%= contato._id  %> " method="post">
+
+          <% }else{%>
+            <form action="/contatos/" method="post">
+
+          <% } %> 
+
+            <input type="hidden" name="_csrf" value=<%- csrfToken %>>
+            <div class="form-group">
+              <label>Nome</label>
+              <input value="<%=contato.nome %>" name="nome" type="text" class="form-control" placeholder="">
+            </div> 
+            <div class="form-group">
+              <label>Sobrenome</label>
+              <input value="<%= contato.sobrenome %>" name="sobrenome" type="text" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <label>E-mail</label>
+              <input value="<%= contato.email%>" name="email" type="email" class="form-control" placeholder="">
+            </div>
+              <div class="form-group">
+                <label>Telefone</label>
+                <input value="<%=contato.telefone %>" name="telefone" type="tel" class="form-control" " placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
 
           </div>
           

@@ -7,23 +7,34 @@
         </div>
         <div class="col-lg-8 my-5">
           <h1 class="display-3 text-center my-3">Agenda</h1>
-          <p class="text-center lead">Seus contatos estão aqui!</p>
-          <%- include('includes/messages')  %> 
-          <div class="row">
-            <div class="col">
-              <div class="alert alert-danger">Um erro</div>
-            </div>
+          <% if(contatos.length == 0) {%>
+          <p class="text-center lead">Parece que você ainda não tem contatos, crie um clicando <a href="/contatos/">aqui</a></p>
 
-          </div>
+         <% }else{ %>
+          <p class="text-center lead">Seus contatos estão aqui</p>
+
+          <%- include('includes/messages')  %> 
+
+
           <div class="responsive-table">
             <table class="table my-3">
-              <tr>
-                <td>teste</td>
-                <td>teste</td>
-                <td>rtyu</td>
-                <td>tyhujk</td>
-              </tr>
+              <% contatos.forEach(c=>{%>
+                <% %>
+                <table class="table my-3">
+                  <tr>
+                    <td><%= c.nome %> </td>
+                    <td><%= c.sobrenome %> </td>
+                    <td><%= c.email %> </td>
+                    <td><%= c.telefone %> </td>
+                    <td><a class="text-blue" href="/contatos/<%= c._id %>">Editar</a></td>
+                    <td><a class="text-danger" href="/contatos/<%= c._id %>/delete">Excluir</a></td>
+                  </tr>
+                </table>
+              <% }) %> 
             </table>
+
+         <% } %> 
+      
           </div>
         </div>
       </div>

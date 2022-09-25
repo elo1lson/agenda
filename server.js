@@ -2,11 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true
+})
   .then(() => {
     app.emit('ready');
   })
   .catch(e => console.log(e));
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
