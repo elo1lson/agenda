@@ -49,7 +49,6 @@ exports.update = async (req, res) => {
     let contato = await new Contato(req.body)
     await contato.edit(req.params.id)
 
-    console.log(contato.contato);
 
     if (contato.errors.length > 0) {
       req.flash('errors', contato.errors)
@@ -64,7 +63,6 @@ exports.update = async (req, res) => {
 
   } catch (e) {
     res.render('404')
-    console.log(e);
     return
   }
 

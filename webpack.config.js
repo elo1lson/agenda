@@ -1,4 +1,4 @@
-const path = require('path'); // CommonJS
+nst path = require('path'); // CommonJS
 
 module.exports = {
   mode: 'production',

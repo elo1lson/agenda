@@ -19,4 +19,7 @@ route.get('/contatos/:id', loginRequired, contatoController.edit);
 route.get('/contatos/:id/delete', loginRequired, contatoController.delete);
 route.post('/contatos/:id', loginRequired, contatoController.update);
 
+route.get('*', function(req, res){
+  res.render('404');
+});
 module.exports = route;

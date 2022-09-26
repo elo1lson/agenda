@@ -35,10 +35,11 @@
                 <input value="<%=contato.telefone %>" name="telefone" type="tel" class="form-control" " placeholder="">
               </div>
               <button type="submit" class="btn btn-primary">Salvar</button>
+              <% if(Object.keys(contato).length > 0) { %>
+              <button class="btn btn-danger"><a style="color: white; text-decoration: none;" href="/contatos/<%= contato._id %>/delete">Excluir</a></button>
+              <% } %> 
             </form>
-
-          </div>
-          
+          </div>  
         </div>
       </div>
     </div>
