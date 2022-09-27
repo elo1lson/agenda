@@ -19,13 +19,15 @@ const routes = require('./routes');
 const path = require('path');
 const helmet = require('helmet');
 const csrf = require('csurf');
+const favicon = require('serve-favicon')
 
 const {
   middlewareGlobal,
   checkCsrfError,
   csrfMiddleware } = require('./src/middlewares/middleware');
 
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
